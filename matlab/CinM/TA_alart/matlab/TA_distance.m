@@ -117,6 +117,13 @@ mesh(V1',V2',d_m)
 hold on
 mesh(V1',V2',d_e)
 
+figure;
+plot(1:40,d_w(20,:))
+xlabel('behind speed'),ylabel('前车20m/s,FCW安全预警距离')
+
+figure;
+plot(1:40,d_w(:,20))
+xlabel('ahead speed'),ylabel('后车20m/s,FCW安全预警距离')
 %% ICW预警
 maxv = 40;
 a1 = 0

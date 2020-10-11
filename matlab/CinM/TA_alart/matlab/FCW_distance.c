@@ -202,7 +202,7 @@ float Vetalk_calcFCWWarningDistance(float frontvehicle_speed, float frontvehicle
     float   warning_readiness_time;
     float   follow_readiness_time;
     float   min_safety_distance;
-    float   follow_frontvehicle_lonaccel;
+    /// float   follow_frontvehicle_lonaccel;
     float   rearvehicle_lonaccel;
     float   d_follow;
     float   d_warning;
@@ -213,17 +213,16 @@ float Vetalk_calcFCWWarningDistance(float frontvehicle_speed, float frontvehicle
     warning_readiness_time = 1.2 + Ts;     // FCW_warning_reaction_time_s
     follow_readiness_time = 0.5 + Ts;      // FCW_follow_reaction_time_s
     min_safety_distance = 2;               // FCW_minsafety_distance_m
-    follow_frontvehicle_lonaccel = -6;     // FCW_mindecelerate_mps2
+    // follow_frontvehicle_lonaccel = -6;     // FCW_mindecelerate_mps2
     rearvehicle_lonaccel = -6;             // FCW_mindecelerate_mps2
 
-    d_follow = _Vetalk_calcSafeDistance(follow_readiness_time, frontvehicle_speed, rearvehicle_speed, follow_frontvehicle_lonaccel, rearvehicle_lonaccel, min_safety_distance);
+    d_follow = follow_readiness_time * rearvehicle_speed;
 
     d_warning = _Vetalk_calcSafeDistance(warning_readiness_time, frontvehicle_speed, rearvehicle_speed, frontvehicle_lonaccel, rearvehicle_lonaccel, min_safety_distance);
 
     
     if (frontvehicle_speed <= rearvehicle_speed) {
-        if (rearvehicle_speed >= 60/3.6 && (rearvehicle_speed - frontvehicle_speed) < 5/3.6) {
-            /* 返回跟随距离和soft距离较大的一�?*/
+        if (rearvehicle_speed >= 60.0/3.6 ) {
             return (d_follow > d_warning ? d_follow : d_warning);
         } else {
             return d_warning;
